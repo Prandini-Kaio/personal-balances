@@ -35,6 +35,11 @@ public class LancamentoController {
         return ResponseEntity.ok(this.service.registerLancamento(conta));
     }
 
+    @PutMapping
+    public ResponseEntity update(LancamentoInput input){
+        return ResponseEntity.ok().body(service.update(input));
+    }
+
     @GetMapping("/exportar-csv")
     public ResponseEntity<InputStreamResource> getCsv(LancamentoFilter filter){
         File file = this.service.getCsvByFilter(filter);

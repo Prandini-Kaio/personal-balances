@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Entity(name = "lancamento")
 @Table(name = "lancamentos")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Lancamento {
@@ -26,7 +27,6 @@ public class Lancamento {
     private String descricao;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "conta_id")
     private Conta conta;
 
     @Enumerated(EnumType.STRING)
@@ -35,6 +35,5 @@ public class Lancamento {
     @Enumerated(EnumType.STRING)
     private TipoLancamento tipoLancamento;
 
-    @Setter
     private boolean ativa;
 }

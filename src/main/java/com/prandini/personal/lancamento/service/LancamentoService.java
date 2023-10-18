@@ -46,6 +46,10 @@ public class LancamentoService {
         return register.register(lancamentoInput);
     }
 
+    public LancamentoOutput update(LancamentoInput input){
+        return LancamentoConverter.toOutput(updater.update(input));
+    }
+
     public File getCsvByFilter(LancamentoFilter filter){
         return reporter.getReportCsvByFilter(filter);
     }

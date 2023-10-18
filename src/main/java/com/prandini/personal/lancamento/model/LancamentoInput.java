@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 
 @Getter
 public class LancamentoInput {
+    private Long id;
     @NotNull
     private Long contaId;
     @NotNull
