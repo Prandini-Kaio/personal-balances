@@ -27,9 +27,6 @@ public class LancamentoConverter {
 
     public static List<LancamentoOutput> toOutput(List<Lancamento> lancamentos){
 
-        List<LancamentoOutput> lancamentoOutputs = new ArrayList<>();
-        lancamentos.forEach(LancamentoConverter::toOutput);
-
-        return lancamentoOutputs;
+        return lancamentos.stream().map(LancamentoConverter::toOutput).toList();
     }
 }
