@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/lancamento")
@@ -30,6 +31,11 @@ public class LancamentoController {
         return ResponseEntity.ok(this.service.getPageOfContas(pageable));
     }
 
+    @GetMapping("/byFilter")
+    public ResponseEntity<List<LancamentoOutput>> getByFilter(@RequestBody @Valid LancamentoFilter filter){
+        return ResponseEntity.ok(this.service.getByConta(filter));
+    }
+
     @PostMapping
     public ResponseEntity register(@RequestBody @Valid LancamentoInput conta){
         return ResponseEntity.ok(this.service.registerLancamento(conta));
@@ -40,8 +46,14 @@ public class LancamentoController {
         return ResponseEntity.ok().body(service.update(input));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable("id") Long id){
+        return ResponseEntity.ok().body(service.desactive(id));
+    }
+
+
     @GetMapping("/exportar-csv")
-    public ResponseEntity<InputStreamResource> getCsv(LancamentoFilter filter){
+    public ResponseEntity<InputStreamResource> getCsv(@RequestBody @Valid LancamentoFilter filter){
         File file = this.service.getCsvByFilter(filter);
         try {
             InputStreamResource body = new InputStreamResource(new FileInputStream(file));

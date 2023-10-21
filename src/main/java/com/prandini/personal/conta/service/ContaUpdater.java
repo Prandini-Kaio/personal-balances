@@ -16,4 +16,10 @@ public class ContaUpdater {
     public Conta update(ContaInput input){
         return repository.getReferenceById(input.getId());
     }
+
+    public Conta desactive(Long id){
+        Conta conta = repository.getReferenceById(id);
+        conta.setActive(false);
+        return conta;
+    }
 }

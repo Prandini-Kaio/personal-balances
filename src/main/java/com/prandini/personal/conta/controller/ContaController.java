@@ -7,7 +7,6 @@ import com.prandini.personal.conta.repository.ContaRepository;
 import com.prandini.personal.conta.service.ContaService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,5 +36,10 @@ public class ContaController {
     @PutMapping
     public ResponseEntity update(ContaInput input){
         return ResponseEntity.ok(service.update(input));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable("id") Long id){
+        return ResponseEntity.ok(service.desactive(id));
     }
 }

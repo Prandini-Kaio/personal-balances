@@ -7,6 +7,7 @@ import com.prandini.personal.lancamento.enums.TipoLancamento;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -17,17 +18,9 @@ import java.time.LocalDateTime;
 public class LancamentoOutput {
     private Long id;
     private BigDecimal valor;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDateTime data;
     private String description;
     private CategoriaLancamento categoriaLancamento;
     private TipoLancamento tipoLancamento;
-
-    public LancamentoOutput(Lancamento lancamento){
-        this.id = lancamento.getId();
-        this.valor = lancamento.getValor();
-        this.data = lancamento.getData();
-        this.description = lancamento.getDescricao();
-        this.categoriaLancamento = lancamento.getCategoriaLancamento();
-        this.tipoLancamento = lancamento.getTipoLancamento();
-    }
 }

@@ -33,4 +33,8 @@ public class ContaService {
     public ContaOutput update(ContaInput input){
         return ContaConverter.toOutput(this.updater.update(input));
     }
+
+    public ContaOutput desactive(Long id){
+        return ContaConverter.toOutput(updater.desactive(id));
+    }
 }

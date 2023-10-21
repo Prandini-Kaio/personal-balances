@@ -26,4 +26,10 @@ public class LancamentoUpdater {
 
         return lancamento;
     }
+
+    public Lancamento desactive(Long id){
+        Lancamento lancamento = repository.getReferenceById(id);
+        lancamento.setAtiva(false);
+        return lancamento;
+    }
 }

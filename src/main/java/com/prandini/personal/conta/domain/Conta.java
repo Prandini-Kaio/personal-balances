@@ -4,6 +4,7 @@ import com.prandini.personal.lancamento.domain.Lancamento;
 import com.prandini.personal.lancamento.model.LancamentoOutput;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Entity(name = "conta")
 @Table(name = "contas")
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Conta {

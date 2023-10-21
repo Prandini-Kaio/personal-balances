@@ -8,12 +8,13 @@ import com.prandini.personal.lancamento.model.LancamentoInput;
 import com.prandini.personal.lancamento.model.LancamentoOutput;
 import com.prandini.personal.lancamento.service.actions.LancamentoReportAction;
 import jakarta.annotation.Resource;
-import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.util.List;
+import java.util.stream.Stream;
 
 @Component
 public class LancamentoService {
@@ -38,7 +39,7 @@ public class LancamentoService {
 
     public LancamentoOutput registerLancamento(LancamentoInput lancamentoInput){
         try {
-            validator.validar(lancamentoInput);
+            validator.execute(lancamentoInput);
         } catch (LancamentoException e) {
             throw new RuntimeException(e);
         }
@@ -48,6 +49,14 @@ public class LancamentoService {
 
     public LancamentoOutput update(LancamentoInput input){
         return LancamentoConverter.toOutput(updater.update(input));
+    }
+
+    public LancamentoOutput desactive(Long id){
+        return LancamentoConverter.toOutput(updater.desactive(id));
+    }
+
+    public List<LancamentoOutput> getByConta(LancamentoFilter filter){
+        return LancamentoConverter.toOutput(this.getter.getLancamentosByConta(filter));
     }
 
     public File getCsvByFilter(LancamentoFilter filter){
