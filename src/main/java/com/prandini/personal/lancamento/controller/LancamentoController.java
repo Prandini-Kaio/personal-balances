@@ -32,7 +32,7 @@ public class LancamentoController {
         return ResponseEntity.ok(this.service.getPageOfContas(pageable));
     }
 
-    @GetMapping("/byFilter")
+    @GetMapping("/filter")
     public ResponseEntity<Stream<LancamentoOutput>> getByFilter(@RequestBody @Valid LancamentoFilter filter){
         return ResponseEntity.ok(this.service.findStreamByFilter(filter));
     }
