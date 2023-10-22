@@ -37,7 +37,7 @@ public class LancamentoController {
         return ResponseEntity.ok(this.service.findStreamByFilter(filter));
     }
 
-    @GetMapping("/{conta}}")
+    @GetMapping("/{conta}")
     public ResponseEntity<List<LancamentoOutput>> getByFilter(@PathVariable("conta") String conta){
         return ResponseEntity.ok(this.service.getByConta(conta));
     }

@@ -14,6 +14,7 @@ public class LancamentoConverter {
     public static LancamentoOutput toOutput(Lancamento lancamento){
         return new LancamentoOutput(
                 lancamento.getId(),
+                lancamento.getConta().getName(),
                 lancamento.getValor(),
                 lancamento.getData(),
                 lancamento.getDescricao(),

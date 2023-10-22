@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class LancamentoOutput {
     private Long id;
+    private String conta;
     private BigDecimal valor;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDateTime data;
