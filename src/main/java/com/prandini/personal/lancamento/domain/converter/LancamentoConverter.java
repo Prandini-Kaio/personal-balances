@@ -25,8 +25,11 @@ public class LancamentoConverter {
         return contas.map(LancamentoConverter::toOutput);
     }
 
-    public static List<LancamentoOutput> toOutput(List<Lancamento> lancamentos){
+    public static Stream<LancamentoOutput> toOutput(Stream<Lancamento> lancamentos){
+        return lancamentos.map(LancamentoConverter::toOutput);
+    }
 
+    public static List<LancamentoOutput> toOutput(List<Lancamento> lancamentos){
         return lancamentos.stream().map(LancamentoConverter::toOutput).toList();
     }
 }

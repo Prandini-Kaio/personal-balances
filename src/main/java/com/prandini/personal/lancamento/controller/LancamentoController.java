@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/lancamento")
@@ -32,8 +33,8 @@ public class LancamentoController {
     }
 
     @GetMapping("/byFilter")
-    public ResponseEntity<List<LancamentoOutput>> getByFilter(@RequestBody @Valid LancamentoFilter filter){
-        return ResponseEntity.ok(this.service.getByConta(filter));
+    public ResponseEntity<Stream<LancamentoOutput>> getByFilter(@RequestBody @Valid LancamentoFilter filter){
+        return ResponseEntity.ok(this.service.findStreamByFilter(filter));
     }
 
     @GetMapping("/{conta}}")

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Component
 public class LancamentoService {
@@ -56,6 +57,10 @@ public class LancamentoService {
 
     public List<LancamentoOutput> getByConta(String conta){
         return LancamentoConverter.toOutput(this.getter.findByConta(conta));
+    }
+
+    public Stream<LancamentoOutput> findStreamByFilter(LancamentoFilter filter){
+        return LancamentoConverter.toOutput(getter.findByFilter(filter));
     }
 
     public File findByFilter(LancamentoFilter filter){
