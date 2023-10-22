@@ -21,11 +21,11 @@ public class LancamentoGetter {
         return repository.findAllByAtivaIsTrue(pageable);
     }
 
-    public List<Lancamento> getLancamentosByConta(LancamentoFilter filter){
-        return repository.findByConta(filter);
+    public List<Lancamento> findByConta(String conta){
+        return repository.findByConta(conta);
     }
 
-    public Stream<Lancamento> getLancamentosByFilter(LancamentoFilter filter){
+    public Stream<Lancamento> findByFilter(LancamentoFilter filter){
         return repository.findStreamByFilter(filter);
     }
 

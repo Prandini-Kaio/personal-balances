@@ -26,7 +26,7 @@ public class LancamentoReportAction {
     private FileService fileService;
 
     public File getReportCsvByFilter(LancamentoFilter filter){
-        Stream<Lancamento> stream = lancamentoGetter.getLancamentosByFilter(filter);
+        Stream<Lancamento> stream = lancamentoGetter.findByFilter(filter);
 
         String filename = fileService.getFullFilename(String.format("lancamentos-%s-%s", LocalDateConverter.toDateNumbersOnly(LocalDateTime.now()), LocalDateConverter.toTimeNumbersOnly(LocalDateTime.now())));
         ExportadorService.exportarDadosParaCSVMap(stream, colunasRelatorio(), filename);

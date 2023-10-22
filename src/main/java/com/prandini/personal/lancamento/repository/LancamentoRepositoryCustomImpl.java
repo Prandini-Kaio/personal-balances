@@ -19,7 +19,7 @@ public class LancamentoRepositoryCustomImpl implements LancamentoRepositoryCusto
 
 
     @Override
-    public List<Lancamento> findByConta(LancamentoFilter filter) {
+    public List<Lancamento> findByConta(String conta) {
         Map<String, Object> params = new HashMap<>();
 
         StringBuilder sb = new StringBuilder();
@@ -29,7 +29,7 @@ public class LancamentoRepositoryCustomImpl implements LancamentoRepositoryCusto
                 .append("JOIN l.conta AS c ")
                 .append("WHERE 1 = 1 ");
 
-        QueryUtils.safeAddParams(params, "conta", filter.getConta(), sb, "AND c.name = :conta ");
+        QueryUtils.safeAddParams(params, "conta", conta, sb, "AND c.name = :conta ");
 
         sb.append("ORDER BY l.data , ")
                 .append("l.tipoLancamento , ")
@@ -49,16 +49,19 @@ public class LancamentoRepositoryCustomImpl implements LancamentoRepositoryCusto
 
         sb.append("SELECT l ")
                 .append("FROM lancamento AS l ")
+                .append("JOIN l.conta AS c ")
                 .append("WHERE 1 = 1 ");
 
         QueryUtils.safeAddParams(params, "id", filter.getId(), sb, "AND l.id = :id ");
+        QueryUtils.safeAddParams(params, "conta", filter.getConta(), sb, "AND c.name = :conta ");
         QueryUtils.safeAddParams(params, "dataInicio", filter.getDataInicio(), sb, "AND l.data >= :dataInicio ");
         QueryUtils.safeAddParams(params, "dataFim", filter.getDataFim(), sb, "AND l.data <= :dataFim ");
         QueryUtils.safeAddParams(params, "categoria", filter.getCategoria(), sb, "AND l.categoriaLancamento = :categoria ");
-        QueryUtils.safeAddParams(params, "dataFim", filter.getTipo(), sb, "AND l.tipoLancamento = :tipo ");
+        QueryUtils.safeAddParams(params, "tipo", filter.getTipo(), sb, "AND l.tipoLancamento = :tipo ");
 
-        sb.append("ORDER BY l.data ASC, ")
-                .append("l.valor");
+        sb.append("ORDER BY c.name ASC, ")
+                .append("l.data ASC, ")
+                .append("l.valor ASC ");
 
         Query query = this.entityManager.createQuery(sb.toString());
         params.forEach(query::setParameter);

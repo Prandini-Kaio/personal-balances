@@ -8,6 +8,6 @@ import java.util.stream.Stream;
 
 public interface LancamentoRepositoryCustom {
 
-    List<Lancamento> findByConta(LancamentoFilter filter);
+    List<Lancamento> findByConta(String conta);
     Stream<Lancamento> findStreamByFilter(LancamentoFilter filter);
 }

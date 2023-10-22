@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Component
 public class LancamentoService {
@@ -55,11 +54,11 @@ public class LancamentoService {
         return LancamentoConverter.toOutput(updater.desactive(id));
     }
 
-    public List<LancamentoOutput> getByConta(LancamentoFilter filter){
-        return LancamentoConverter.toOutput(this.getter.getLancamentosByConta(filter));
+    public List<LancamentoOutput> getByConta(String conta){
+        return LancamentoConverter.toOutput(this.getter.findByConta(conta));
     }
 
-    public File getCsvByFilter(LancamentoFilter filter){
+    public File findByFilter(LancamentoFilter filter){
         return reporter.getReportCsvByFilter(filter);
     }
 }

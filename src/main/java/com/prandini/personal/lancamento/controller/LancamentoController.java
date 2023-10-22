@@ -36,6 +36,11 @@ public class LancamentoController {
         return ResponseEntity.ok(this.service.getByConta(filter));
     }
 
+    @GetMapping("/{conta}}")
+    public ResponseEntity<List<LancamentoOutput>> getByFilter(@PathVariable("conta") String conta){
+        return ResponseEntity.ok(this.service.getByConta(conta));
+    }
+
     @PostMapping
     public ResponseEntity register(@RequestBody @Valid LancamentoInput conta){
         return ResponseEntity.ok(this.service.registerLancamento(conta));
@@ -54,7 +59,7 @@ public class LancamentoController {
 
     @GetMapping("/exportar-csv")
     public ResponseEntity<InputStreamResource> getCsv(@RequestBody @Valid LancamentoFilter filter){
-        File file = this.service.getCsvByFilter(filter);
+        File file = this.service.findByFilter(filter);
         try {
             InputStreamResource body = new InputStreamResource(new FileInputStream(file));
             return ResponseEntity.ok().contentType(MediaTypeUtil.frowFile(file)).body(body);
