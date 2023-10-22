@@ -3,6 +3,7 @@ package com.prandini.personal.lancamento.repository;
 import com.prandini.personal.common.QueryUtils;
 import com.prandini.personal.lancamento.domain.Lancamento;
 import com.prandini.personal.lancamento.domain.filter.LancamentoFilter;
+import com.prandini.personal.lancamento.model.dto.CostOfMonthDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -67,5 +68,29 @@ public class LancamentoRepositoryCustomImpl implements LancamentoRepositoryCusto
         params.forEach(query::setParameter);
 
         return query.getResultStream();
+    }
+
+    @Override
+    public List<CostOfMonthDTO> findByMes(Integer mes) {
+        Map<String, Object> params = new HashMap<>();
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("SELECT ")
+                .append("EXTRACT (MONTH FROM l.data) AS mes, ")
+                .append("SUM(l.valor) AS total, ")
+                .append("ROUND(AVG(l.valor)) AS media ")
+                .append("FROM lancamento AS l ")
+                .append("WHERE 1 = 1");
+
+        QueryUtils.safeAddParams(params, "mes", mes, sb, "AND EXTRACT(MONTH FROM l.data) = :mes ");
+
+        sb.append("GROUP BY ")
+                .append("mes ");
+
+        Query query = this.entityManager.createQuery(sb.toString());
+        params.forEach(query::setParameter);
+
+        return query.getResultList();
     }
 }

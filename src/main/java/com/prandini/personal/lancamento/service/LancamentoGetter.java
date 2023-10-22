@@ -2,6 +2,7 @@ package com.prandini.personal.lancamento.service;
 
 import com.prandini.personal.lancamento.domain.Lancamento;
 import com.prandini.personal.lancamento.domain.filter.LancamentoFilter;
+import com.prandini.personal.lancamento.model.dto.CostOfMonthDTO;
 import com.prandini.personal.lancamento.repository.LancamentoRepository;
 import jakarta.annotation.Resource;
 import org.springframework.data.domain.Page;
@@ -27,6 +28,10 @@ public class LancamentoGetter {
 
     public Stream<Lancamento> findByFilter(LancamentoFilter filter){
         return repository.findStreamByFilter(filter);
+    }
+
+    public List<CostOfMonthDTO> findCostByMes(Integer mes){
+        return repository.findByMes(mes);
     }
 
 }

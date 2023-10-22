@@ -4,9 +4,11 @@ import com.prandini.personal.common.MediaTypeUtil;
 import com.prandini.personal.lancamento.domain.filter.LancamentoFilter;
 import com.prandini.personal.lancamento.model.LancamentoInput;
 import com.prandini.personal.lancamento.model.LancamentoOutput;
+import com.prandini.personal.lancamento.model.dto.CostOfMonthDTO;
 import com.prandini.personal.lancamento.service.LancamentoService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +42,11 @@ public class LancamentoController {
     @GetMapping("/{conta}")
     public ResponseEntity<List<LancamentoOutput>> getByFilter(@PathVariable("conta") String conta){
         return ResponseEntity.ok(this.service.getByConta(conta));
+    }
+
+    @GetMapping("/cost")
+    public ResponseEntity<List<CostOfMonthDTO>> getCostByMes(Integer mes){
+        return ResponseEntity.ok(service.getCostOfMonth(mes));
     }
 
     @PostMapping

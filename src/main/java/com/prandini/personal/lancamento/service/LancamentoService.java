@@ -6,6 +6,7 @@ import com.prandini.personal.lancamento.domain.filter.LancamentoFilter;
 import com.prandini.personal.lancamento.exceptions.LancamentoException;
 import com.prandini.personal.lancamento.model.LancamentoInput;
 import com.prandini.personal.lancamento.model.LancamentoOutput;
+import com.prandini.personal.lancamento.model.dto.CostOfMonthDTO;
 import com.prandini.personal.lancamento.service.actions.LancamentoReportAction;
 import jakarta.annotation.Resource;
 import org.springframework.data.domain.Page;
@@ -65,5 +66,9 @@ public class LancamentoService {
 
     public File findByFilter(LancamentoFilter filter){
         return reporter.getReportCsvByFilter(filter);
+    }
+
+    public List<CostOfMonthDTO> getCostOfMonth(Integer mes){
+        return getter.findCostByMes(mes);
     }
 }
