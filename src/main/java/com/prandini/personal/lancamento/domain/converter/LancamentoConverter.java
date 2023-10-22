@@ -16,7 +16,7 @@ public class LancamentoConverter {
                 lancamento.getId(),
                 lancamento.getConta().getName(),
                 lancamento.getValor(),
-                lancamento.getData(),
+                LocalDateConverter.toBrazilianDateString(lancamento.getData()),
                 lancamento.getDescricao(),
                 lancamento.getCategoriaLancamento(),
                 lancamento.getTipoLancamento());
