@@ -45,7 +45,7 @@ public class LancamentoController {
     }
 
     @GetMapping("/cost")
-    public ResponseEntity<List<CostOfMonthDTO>> getCostByMes(Integer mes){
+    public ResponseEntity<List<CostOfMonthDTO>> getCostByMes(@RequestParam(required = false) Integer mes){
         return ResponseEntity.ok(service.getCostOfMonth(mes));
     }
 

@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -31,7 +33,16 @@ public class LancamentoGetter {
     }
 
     public List<CostOfMonthDTO> findCostByMes(Integer mes){
-        return repository.findByMes(mes);
+        List<Object[]> result = repository.findByMes(mes);
+        List<CostOfMonthDTO> dtos = new ArrayList<>();
+        for(var row: result){
+            int month = (Integer)row[0];
+            BigDecimal total = (BigDecimal)row[1];
+            Double avg = (Double) row[2];
+
+            dtos.add(new CostOfMonthDTO(month, total, avg));
+        }
+        return dtos;
     }
 
 }

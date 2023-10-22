@@ -71,22 +71,22 @@ public class LancamentoRepositoryCustomImpl implements LancamentoRepositoryCusto
     }
 
     @Override
-    public List<CostOfMonthDTO> findByMes(Integer mes) {
+    public List<Object[]> findByMes(Integer mes) {
         Map<String, Object> params = new HashMap<>();
 
         StringBuilder sb = new StringBuilder();
 
         sb.append("SELECT ")
-                .append("EXTRACT (MONTH FROM l.data) AS mes, ")
+                .append("MONTH(l.data) AS mes, ")
                 .append("SUM(l.valor) AS total, ")
-                .append("ROUND(AVG(l.valor)) AS media ")
+                .append("AVG(l.valor)::numeric(10, 2) AS media ")
                 .append("FROM lancamento AS l ")
-                .append("WHERE 1 = 1");
+                .append("WHERE 1 = 1 ");
 
-        QueryUtils.safeAddParams(params, "mes", mes, sb, "AND EXTRACT(MONTH FROM l.data) = :mes ");
+        QueryUtils.safeAddParams(params, "mes", mes, sb, "AND MONTH(l.data) = :mes ");
 
         sb.append("GROUP BY ")
-                .append("mes ");
+                .append("MONTH(l.data) ");
 
         Query query = this.entityManager.createQuery(sb.toString());
         params.forEach(query::setParameter);

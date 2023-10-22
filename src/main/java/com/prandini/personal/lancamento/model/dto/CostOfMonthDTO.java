@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class CostOfMonthDTO {
 
+    private Integer mes;
     private BigDecimal custoTotal;
-    private int mes;
-    private BigDecimal media;
+    private Double media;
 }

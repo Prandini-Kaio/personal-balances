@@ -11,5 +11,5 @@ public interface LancamentoRepositoryCustom {
 
     List<Lancamento> findByConta(String conta);
     Stream<Lancamento> findStreamByFilter(LancamentoFilter filter);
-    List<CostOfMonthDTO> findByMes(Integer mes);
+    List<Object[]> findByMes(Integer mes);
 }
