@@ -20,7 +20,7 @@ public class LancamentoRepositoryCustomImpl implements LancamentoRepositoryCusto
 
 
     @Override
-    public List<Lancamento> findByConta(String conta) {
+    public List<Lancamento> byConta(String conta) {
         Map<String, Object> params = new HashMap<>();
 
         StringBuilder sb = new StringBuilder();
@@ -43,7 +43,7 @@ public class LancamentoRepositoryCustomImpl implements LancamentoRepositoryCusto
     }
 
     @Override
-    public Stream<Lancamento> findStreamByFilter(LancamentoFilter filter) {
+    public Stream<Lancamento> byFilter(LancamentoFilter filter) {
         Map<String, Object> params = new HashMap<>();
 
         StringBuilder sb = new StringBuilder();
@@ -71,7 +71,7 @@ public class LancamentoRepositoryCustomImpl implements LancamentoRepositoryCusto
     }
 
     @Override
-    public List<Object[]> findByMes(Integer mes) {
+    public List<Object[]> byMes(Integer mes) {
         Map<String, Object> params = new HashMap<>();
 
         StringBuilder sb = new StringBuilder();
@@ -79,7 +79,7 @@ public class LancamentoRepositoryCustomImpl implements LancamentoRepositoryCusto
         sb.append("SELECT ")
                 .append("MONTH(l.data) AS mes, ")
                 .append("SUM(l.valor) AS total, ")
-                .append("AVG(l.valor)::numeric(10, 2) AS media ")
+                .append("AVG(l.valor) AS media ")
                 .append("FROM lancamento AS l ")
                 .append("WHERE 1 = 1 ");
 

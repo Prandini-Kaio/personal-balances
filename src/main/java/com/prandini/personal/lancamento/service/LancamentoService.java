@@ -57,7 +57,7 @@ public class LancamentoService {
     }
 
     public List<LancamentoOutput> getByConta(String conta){
-        return LancamentoConverter.toOutput(this.getter.findByConta(conta));
+        return LancamentoConverter.toOutput(this.getter.byConta(conta));
     }
 
     public Stream<LancamentoOutput> findStreamByFilter(LancamentoFilter filter){

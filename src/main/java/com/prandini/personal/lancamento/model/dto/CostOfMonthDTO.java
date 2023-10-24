@@ -13,5 +13,5 @@ public class CostOfMonthDTO {
 
     private Integer mes;
     private BigDecimal custoTotal;
-    private Double media;
+    private BigDecimal media;
 }
