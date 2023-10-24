@@ -3,6 +3,7 @@ package com.prandini.personal.lancamento.service;
 import com.prandini.personal.lancamento.domain.Lancamento;
 import com.prandini.personal.lancamento.domain.converter.LancamentoConverter;
 import com.prandini.personal.lancamento.domain.filter.LancamentoFilter;
+import com.prandini.personal.lancamento.enums.CategoriaLancamento;
 import com.prandini.personal.lancamento.exceptions.LancamentoException;
 import com.prandini.personal.lancamento.model.LancamentoInput;
 import com.prandini.personal.lancamento.model.LancamentoOutput;
@@ -56,19 +57,23 @@ public class LancamentoService {
         return LancamentoConverter.toOutput(updater.desactive(id));
     }
 
-    public List<LancamentoOutput> getByConta(String conta){
+    public List<LancamentoOutput> byConta(String conta){
         return LancamentoConverter.toOutput(this.getter.byConta(conta));
     }
 
-    public Stream<LancamentoOutput> findStreamByFilter(LancamentoFilter filter){
+    public Stream<LancamentoOutput> byFilter(LancamentoFilter filter){
         return LancamentoConverter.toOutput(getter.byFilter(filter));
     }
 
-    public File byFilter(LancamentoFilter filter){
+    public File fileByFilter(LancamentoFilter filter) {
         return reporter.csvByFilter(filter);
     }
 
     public List<CostOfMonthDTO> getCostOfMonth(Integer mes){
         return getter.costByMes(mes);
+    }
+
+    public List<LancamentoOutput> byCategoria(CategoriaLancamento categoriaLancamento){
+        return LancamentoConverter.toOutput(getter.byCategoria(categoriaLancamento));
     }
 }
