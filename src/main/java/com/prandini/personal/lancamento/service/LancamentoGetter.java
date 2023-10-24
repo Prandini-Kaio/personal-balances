@@ -2,6 +2,7 @@ package com.prandini.personal.lancamento.service;
 
 import com.prandini.personal.lancamento.domain.Lancamento;
 import com.prandini.personal.lancamento.domain.filter.LancamentoFilter;
+import com.prandini.personal.lancamento.enums.CategoriaLancamento;
 import com.prandini.personal.lancamento.repository.LancamentoRepository;
 import jakarta.annotation.Resource;
 import org.springframework.data.domain.Page;
@@ -21,12 +22,16 @@ public class LancamentoGetter {
         return repository.findAllByAtivaIsTrue(pageable);
     }
 
-    public List<Lancamento> findByConta(String conta){
+    public List<Lancamento> byConta(String conta){
         return repository.findByConta(conta);
     }
 
-    public Stream<Lancamento> findByFilter(LancamentoFilter filter){
+    public Stream<Lancamento> byFilter(LancamentoFilter filter){
         return repository.findStreamByFilter(filter);
+    }
+
+    public List<Lancamento> byCategoria(CategoriaLancamento categoria){
+        return repository.findByCategoria(categoria);
     }
 
 }

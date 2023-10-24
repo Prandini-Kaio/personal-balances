@@ -3,6 +3,7 @@ package com.prandini.personal.lancamento.repository;
 import com.prandini.personal.common.QueryUtils;
 import com.prandini.personal.lancamento.domain.Lancamento;
 import com.prandini.personal.lancamento.domain.filter.LancamentoFilter;
+import com.prandini.personal.lancamento.enums.CategoriaLancamento;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -67,5 +68,28 @@ public class LancamentoRepositoryCustomImpl implements LancamentoRepositoryCusto
         params.forEach(query::setParameter);
 
         return query.getResultStream();
+    }
+
+    @Override
+    public List<Lancamento> findByCategoria(CategoriaLancamento categoria) {
+        Map<String, Object> params = new HashMap<>();
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("SELECT l ")
+                .append("FROM lancamento AS l ")
+                .append("JOIN l.conta AS c ")
+                .append("WHERE 1 = 1 ");
+
+        QueryUtils.safeAddParams(params, "categoria", categoria, sb, "AND l.categoriaLancamento = :categoria ");
+
+        sb.append("ORDER BY l.categoriaLancamento, ")
+                .append("c.name, ")
+                .append("l.data ");
+
+        Query query = this.entityManager.createQuery(sb.toString());
+        params.forEach(query::setParameter);
+
+        return query.getResultList();
     }
 }
