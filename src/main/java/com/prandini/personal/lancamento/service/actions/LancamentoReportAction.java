@@ -25,7 +25,7 @@ public class LancamentoReportAction {
     @Resource
     private FileService fileService;
 
-    public File getReportCsvByFilter(LancamentoFilter filter){
+    public File csvByFilter(LancamentoFilter filter){
         Stream<Lancamento> stream = lancamentoGetter.byFilter(filter);
 
         String filename = fileService.getFullFilename(String.format("lancamentos-%s-%s", LocalDateConverter.toDateNumbersOnly(LocalDateTime.now()), LocalDateConverter.toTimeNumbersOnly(LocalDateTime.now())));
@@ -37,6 +37,7 @@ public class LancamentoReportAction {
 
         LinkedHashMap<String, Function<Lancamento, String>> getters = new LinkedHashMap<>();
         getters.put("ID", l -> l.getId().toString());
+        getters.put("Conta", l -> l.getConta().getName());
         getters.put("Data de registro", l -> LocalDateConverter.toBrazilianDateTimeString(l.getData()));
         getters.put("Valor", l -> "R$" + l.getValor().toString());
         getters.put("Tipo", l -> l.getTipoLancamento().toString());

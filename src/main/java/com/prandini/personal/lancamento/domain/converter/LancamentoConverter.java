@@ -3,6 +3,7 @@ package com.prandini.personal.lancamento.domain.converter;
 import com.prandini.personal.common.LocalDateConverter;
 import com.prandini.personal.lancamento.domain.Lancamento;
 import com.prandini.personal.lancamento.model.LancamentoOutput;
+import com.prandini.personal.lancamento.model.dto.CostOfMonthDTO;
 import org.springframework.data.domain.Page;
 
 import java.util.ArrayList;

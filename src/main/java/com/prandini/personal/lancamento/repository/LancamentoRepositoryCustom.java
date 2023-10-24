@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public interface LancamentoRepositoryCustom {
-
-    List<Lancamento> findByConta(String conta);
-    Stream<Lancamento> findStreamByFilter(LancamentoFilter filter);
+    List<Lancamento> byConta(String conta);
     List<Lancamento> findByCategoria(CategoriaLancamento categoria);
+    Stream<Lancamento> byFilter(LancamentoFilter filter);
+    List<Object[]> byMes(Integer mes);
 }

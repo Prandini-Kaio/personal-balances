@@ -20,7 +20,7 @@ public class LancamentoRepositoryCustomImpl implements LancamentoRepositoryCusto
 
 
     @Override
-    public List<Lancamento> findByConta(String conta) {
+    public List<Lancamento> byConta(String conta) {
         Map<String, Object> params = new HashMap<>();
 
         StringBuilder sb = new StringBuilder();
@@ -43,7 +43,7 @@ public class LancamentoRepositoryCustomImpl implements LancamentoRepositoryCusto
     }
 
     @Override
-    public Stream<Lancamento> findStreamByFilter(LancamentoFilter filter) {
+    public Stream<Lancamento> byFilter(LancamentoFilter filter) {
         Map<String, Object> params = new HashMap<>();
 
         StringBuilder sb = new StringBuilder();
@@ -61,8 +61,8 @@ public class LancamentoRepositoryCustomImpl implements LancamentoRepositoryCusto
         QueryUtils.safeAddParams(params, "tipo", filter.getTipo(), sb, "AND l.tipoLancamento = :tipo ");
 
         sb.append("ORDER BY c.name ASC, ")
-                .append("l.data ASC, ")
-                .append("l.valor ASC ");
+                .append("l.tipoLancamento, ")
+                .append("l.data ASC ");
 
         Query query = this.entityManager.createQuery(sb.toString());
         params.forEach(query::setParameter);
@@ -75,7 +75,6 @@ public class LancamentoRepositoryCustomImpl implements LancamentoRepositoryCusto
         Map<String, Object> params = new HashMap<>();
 
         StringBuilder sb = new StringBuilder();
-
         sb.append("SELECT l ")
                 .append("FROM lancamento AS l ")
                 .append("JOIN l.conta AS c ")
@@ -86,6 +85,29 @@ public class LancamentoRepositoryCustomImpl implements LancamentoRepositoryCusto
         sb.append("ORDER BY l.categoriaLancamento, ")
                 .append("c.name, ")
                 .append("l.data ");
+
+        Query query = this.entityManager.createQuery(sb.toString());
+        params.forEach(query::setParameter);
+
+        return query.getResultList();
+    }
+    public List<Object[]> byMes(Integer mes) {
+        Map<String, Object> params = new HashMap<>();
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("SELECT ")
+                .append("MONTH(l.data) AS mes, ")
+                .append("SUM(l.valor) AS total, ")
+                .append("AVG(l.valor) AS media ")
+                .append("FROM lancamento AS l ")
+                .append("WHERE 1 = 1 ");
+
+        QueryUtils.safeAddParams(params, "mes", mes, sb, "AND MONTH(l.data) = :mes ");
+
+        sb.append("GROUP BY ")
+                .append("MONTH(l.data) ")
+                .append("ORDER BY MONTH(l.data) ");
 
         Query query = this.entityManager.createQuery(sb.toString());
         params.forEach(query::setParameter);
