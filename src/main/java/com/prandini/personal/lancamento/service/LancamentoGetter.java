@@ -29,11 +29,11 @@ public class LancamentoGetter {
         return repository.byConta(conta);
     }
 
-    public Stream<Lancamento> findByFilter(LancamentoFilter filter){
+    public Stream<Lancamento> byFilter(LancamentoFilter filter){
         return repository.byFilter(filter);
     }
 
-    public List<CostOfMonthDTO> findCostByMes(Integer mes){
+    public List<CostOfMonthDTO> costByMes(Integer mes){
         List<Object[]> result = repository.byMes(mes);
         List<CostOfMonthDTO> dtos = new ArrayList<>();
         for(var row: result){

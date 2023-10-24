@@ -8,7 +8,6 @@ import com.prandini.personal.lancamento.model.dto.CostOfMonthDTO;
 import com.prandini.personal.lancamento.service.LancamentoService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -67,7 +66,7 @@ public class LancamentoController {
 
     @GetMapping("/exportar-csv")
     public ResponseEntity<InputStreamResource> getCsv(@RequestBody @Valid LancamentoFilter filter){
-        File file = this.service.findByFilter(filter);
+        File file = this.service.byFilter(filter);
         try {
             InputStreamResource body = new InputStreamResource(new FileInputStream(file));
             return ResponseEntity.ok().contentType(MediaTypeUtil.frowFile(file)).body(body);

@@ -61,14 +61,14 @@ public class LancamentoService {
     }
 
     public Stream<LancamentoOutput> findStreamByFilter(LancamentoFilter filter){
-        return LancamentoConverter.toOutput(getter.findByFilter(filter));
+        return LancamentoConverter.toOutput(getter.byFilter(filter));
     }
 
-    public File findByFilter(LancamentoFilter filter){
-        return reporter.getReportCsvByFilter(filter);
+    public File byFilter(LancamentoFilter filter){
+        return reporter.csvByFilter(filter);
     }
 
     public List<CostOfMonthDTO> getCostOfMonth(Integer mes){
-        return getter.findCostByMes(mes);
+        return getter.costByMes(mes);
     }
 }

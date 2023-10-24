@@ -61,8 +61,8 @@ public class LancamentoRepositoryCustomImpl implements LancamentoRepositoryCusto
         QueryUtils.safeAddParams(params, "tipo", filter.getTipo(), sb, "AND l.tipoLancamento = :tipo ");
 
         sb.append("ORDER BY c.name ASC, ")
-                .append("l.data ASC, ")
-                .append("l.valor ASC ");
+                .append("l.tipoLancamento, ")
+                .append("l.data ASC ");
 
         Query query = this.entityManager.createQuery(sb.toString());
         params.forEach(query::setParameter);
@@ -86,7 +86,8 @@ public class LancamentoRepositoryCustomImpl implements LancamentoRepositoryCusto
         QueryUtils.safeAddParams(params, "mes", mes, sb, "AND MONTH(l.data) = :mes ");
 
         sb.append("GROUP BY ")
-                .append("MONTH(l.data) ");
+                .append("MONTH(l.data) ")
+                .append("ORDER BY MONTH(l.data) ");
 
         Query query = this.entityManager.createQuery(sb.toString());
         params.forEach(query::setParameter);
