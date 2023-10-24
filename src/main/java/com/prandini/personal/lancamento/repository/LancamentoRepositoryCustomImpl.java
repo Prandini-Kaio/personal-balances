@@ -98,8 +98,8 @@ public class LancamentoRepositoryCustomImpl implements LancamentoRepositoryCusto
 
         sb.append("SELECT ")
                 .append("MONTH(l.data) AS mes, ")
-                .append("SUM(l.valor) AS total, ")
-                .append("AVG(l.valor) AS media ")
+                .append("SUM(CASE WHEN l.tipoLancamento = 'SAIDA' THEN l.valor ELSE -l.valor END) AS total, ")
+                .append("AVG(CASE WHEN l.tipoLancamento = 'SAIDA' THEN l.valor END) AS media ")
                 .append("FROM lancamento AS l ")
                 .append("WHERE 1 = 1 ");
 
