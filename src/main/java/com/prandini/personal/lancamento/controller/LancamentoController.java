@@ -4,6 +4,7 @@ import com.prandini.personal.common.MediaTypeUtil;
 import com.prandini.personal.lancamento.domain.filter.LancamentoFilter;
 import com.prandini.personal.lancamento.model.LancamentoInput;
 import com.prandini.personal.lancamento.model.LancamentoOutput;
+import com.prandini.personal.lancamento.model.dto.CostOfMonthDTO;
 import com.prandini.personal.lancamento.service.LancamentoService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
@@ -42,6 +43,11 @@ public class LancamentoController {
         return ResponseEntity.ok(this.service.getByConta(conta));
     }
 
+    @GetMapping("/cost")
+    public ResponseEntity<List<CostOfMonthDTO>> getCostByMes(@RequestParam(required = false) Integer mes){
+        return ResponseEntity.ok(service.getCostOfMonth(mes));
+    }
+
     @PostMapping
     public ResponseEntity register(@RequestBody @Valid LancamentoInput conta){
         return ResponseEntity.ok(this.service.registerLancamento(conta));
@@ -60,7 +66,7 @@ public class LancamentoController {
 
     @GetMapping("/exportar-csv")
     public ResponseEntity<InputStreamResource> getCsv(@RequestBody @Valid LancamentoFilter filter){
-        File file = this.service.findByFilter(filter);
+        File file = this.service.byFilter(filter);
         try {
             InputStreamResource body = new InputStreamResource(new FileInputStream(file));
             return ResponseEntity.ok().contentType(MediaTypeUtil.frowFile(file)).body(body);
