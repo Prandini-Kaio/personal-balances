@@ -21,11 +21,14 @@ public class Conta {
     private Long id;
 
     private String name;
-    private Boolean active;
+
+    @ManyToOne
+    private Banco banco;
 
     @OneToMany()
     private List<Lancamento> lancamentos;
 
+    private Boolean active;
 
     public void addLancamento(Lancamento lancamento){
         lancamentos.add(lancamento);
