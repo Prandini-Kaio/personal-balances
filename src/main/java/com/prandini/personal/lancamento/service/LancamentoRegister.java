@@ -1,9 +1,7 @@
 package com.prandini.personal.lancamento.service;
 
-import com.prandini.personal.conta.domain.Conta;
-import com.prandini.personal.conta.repository.ContaRepository;
-import com.prandini.personal.conta.service.ContaRegister;
-import com.prandini.personal.conta.service.ContaService;
+import com.prandini.personal.banco.domain.Conta;
+import com.prandini.personal.banco.service.ContaService;
 import com.prandini.personal.lancamento.domain.Lancamento;
 import com.prandini.personal.lancamento.domain.converter.LancamentoConverter;
 import com.prandini.personal.lancamento.model.LancamentoInput;
@@ -23,7 +21,7 @@ public class LancamentoRegister {
     private ContaService contaService;
 
     public LancamentoOutput register(LancamentoInput input){
-        Conta conta = contaService.getIfExists(input.getContaId());
+        Conta conta = contaService.byId(input.getContaId());
 
         Lancamento lancamento = new Lancamento(
                 null,

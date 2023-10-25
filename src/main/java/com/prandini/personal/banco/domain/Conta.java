@@ -1,4 +1,4 @@
-package com.prandini.personal.conta.domain;
+package com.prandini.personal.banco.domain;
 
 import com.prandini.personal.lancamento.domain.Lancamento;
 import jakarta.persistence.*;
@@ -20,7 +20,7 @@ public class Conta {
     private Long id;
     private String name;
     private BigDecimal valueOn;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private CreditCard creditCard;
     @ManyToOne
     private Banco banco;

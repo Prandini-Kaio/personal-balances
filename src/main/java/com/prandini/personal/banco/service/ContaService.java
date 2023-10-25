@@ -1,9 +1,9 @@
-package com.prandini.personal.conta.service;
+package com.prandini.personal.banco.service;
 
-import com.prandini.personal.conta.domain.Conta;
-import com.prandini.personal.conta.domain.converter.ContaConverter;
-import com.prandini.personal.conta.model.ContaInput;
-import com.prandini.personal.conta.model.ContaOutput;
+import com.prandini.personal.banco.domain.Conta;
+import com.prandini.personal.banco.domain.converter.ContaConverter;
+import com.prandini.personal.banco.model.ContaInput;
+import com.prandini.personal.banco.model.ContaOutput;
 import jakarta.annotation.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,16 +22,12 @@ public class ContaService {
         return this.register.register(input);
     }
 
-    public Conta getIfExists(Long id){
-        return getter.getIfExists(id);
+    public Conta byId(Long id){
+        return getter.findById(id);
     }
 
     public Page<ContaOutput> getAll(Pageable pageable) {
         return getter.getContas(pageable);
-    }
-
-    public ContaOutput update(ContaInput input){
-        return ContaConverter.toOutput(this.updater.update(input));
     }
 
     public ContaOutput desactive(Long id){

@@ -1,6 +1,6 @@
 package com.prandini.personal.lancamento.domain;
 
-import com.prandini.personal.conta.domain.Conta;
+import com.prandini.personal.banco.domain.Conta;
 import com.prandini.personal.lancamento.enums.CategoriaLancamento;
 import com.prandini.personal.lancamento.enums.TipoLancamento;
 import jakarta.persistence.*;

@@ -1,13 +1,11 @@
-package com.prandini.personal.conta.domain;
+package com.prandini.personal.banco.domain;
 
-import com.prandini.personal.lancamento.domain.Lancamento;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Entity(name = "credito")
 @Table(name = "creditos")

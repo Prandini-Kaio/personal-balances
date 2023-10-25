@@ -1,14 +1,19 @@
-package com.prandini.personal.conta.repository;
+package com.prandini.personal.banco.repository;
 
-import com.prandini.personal.conta.domain.Conta;
-import com.prandini.personal.conta.model.ContaOutput;
+import com.prandini.personal.banco.domain.Conta;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 public interface ContaRepository extends JpaRepository<Conta, Long> {
 
     Page<Conta> findByActiveIsTrue(Pageable pageable);
+    @Query("SELECT c FROM conta c WHERE c.name = :name")
+    Optional<Conta> findByName(String name);
+
 }

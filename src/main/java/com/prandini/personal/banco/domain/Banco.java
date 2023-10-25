@@ -1,11 +1,9 @@
-package com.prandini.personal.conta.domain;
+package com.prandini.personal.banco.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Entity(name = "banco")
 @Table(name = "bancos")

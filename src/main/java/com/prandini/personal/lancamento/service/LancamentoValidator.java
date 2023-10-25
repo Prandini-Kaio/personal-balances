@@ -1,6 +1,6 @@
 package com.prandini.personal.lancamento.service;
 
-import com.prandini.personal.conta.service.ContaService;
+import com.prandini.personal.banco.service.ContaService;
 import com.prandini.personal.lancamento.exceptions.LancamentoException;
 import com.prandini.personal.lancamento.model.LancamentoInput;
 import jakarta.annotation.Resource;
