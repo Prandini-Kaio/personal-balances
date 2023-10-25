@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Credito {
+public class CreditCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,6 +23,4 @@ public class Credito {
     private BigDecimal limite;
     private BigDecimal limiteUtilizado;
     private int diaVencimento;
-    @OneToMany
-    private List<Lancamento> lancamentos;
 }

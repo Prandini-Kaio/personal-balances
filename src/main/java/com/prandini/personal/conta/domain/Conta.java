@@ -1,13 +1,12 @@
 package com.prandini.personal.conta.domain;
 
 import com.prandini.personal.lancamento.domain.Lancamento;
-import com.prandini.personal.lancamento.model.LancamentoOutput;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity(name = "conta")
@@ -19,18 +18,13 @@ public class Conta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
-
+    private BigDecimal valueOn;
+    @OneToOne
+    private CreditCard creditCard;
     @ManyToOne
     private Banco banco;
-
-    @OneToMany()
+    @OneToMany
     private List<Lancamento> lancamentos;
-
     private Boolean active;
-
-    public void addLancamento(Lancamento lancamento){
-        lancamentos.add(lancamento);
-    }
 }
