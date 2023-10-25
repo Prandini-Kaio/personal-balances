@@ -19,7 +19,6 @@ public class ContaRegister {
 
     @Resource
     private ContaRepository repository;
-
     @Resource
     private BancoGetter bancoGetter;
     @Resource

@@ -33,7 +33,8 @@ public class LancamentoRegister {
                 input.getTipoLancamento(),
                 true
         );
-        conta.addLancamento(lancamento);
+
+        contaService.addLancamento(conta, lancamento);
         repository.save(lancamento);
 
         return LancamentoConverter.toOutput(lancamento);

@@ -1,5 +1,6 @@
 package com.prandini.personal.banco.domain;
 
+import com.prandini.personal.banco.service.LancamentoValidator;
 import com.prandini.personal.lancamento.domain.Lancamento;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,4 +28,13 @@ public class Conta {
     @OneToMany
     private List<Lancamento> lancamentos;
     private Boolean active;
+
+    public void addLancamento(Lancamento lancamento){
+        LancamentoValidator.validar(lancamento);
+        this.lancamentos.add(lancamento);
+    }
+
+    public void sumValueOn(BigDecimal value){
+        this.valueOn = this.valueOn.add(value);
+    }
 }
