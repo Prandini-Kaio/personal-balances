@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 public class ContaConverter {
 
     public static ContaOutput toOutput(Conta conta){
-        return new ContaOutput(conta.getId(), conta.getBanco().getName(), conta.getName(), conta.getValueOn(), conta.getActive(), LancamentoConverter.toOutput(conta.getLancamentos()));
+        return new ContaOutput(conta.getId(), conta.getBanco().getName(), conta.getName(), conta.getValueOn(), conta.getActive());//, LancamentoConverter.toOutput(conta.getLancamentos()));
     }
 
     public static Page<ContaOutput> toOutput(Page<Conta> contas){

@@ -19,7 +19,6 @@ public class LancamentoUpdater {
     public Lancamento update(LancamentoInput input){
         Lancamento lancamento = repository.getReferenceById(input.getId());
 
-        lancamento.setValor(input.getValor());
         lancamento.setDescricao(input.getDescricao());
         lancamento.setCategoriaLancamento(input.getCategoriaLancamento());
         lancamento.setTipoLancamento(input.getTipoLancamento());

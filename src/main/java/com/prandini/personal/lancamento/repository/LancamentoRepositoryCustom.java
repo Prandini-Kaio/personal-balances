@@ -11,4 +11,5 @@ public interface LancamentoRepositoryCustom {
     List<Lancamento> byConta(String conta);
     Stream<Lancamento> byFilter(LancamentoFilter filter);
     List<Object[]> byMes(Integer mes);
+    List<Lancamento> byBancoAndConta(String conta, String banco);
 }

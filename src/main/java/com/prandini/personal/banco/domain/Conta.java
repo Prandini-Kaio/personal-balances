@@ -25,9 +25,9 @@ public class Conta {
     private CreditCard creditCard;
     @ManyToOne
     private Banco banco;
-    @OneToMany
+    @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL)
     private List<Lancamento> lancamentos;
-    private Boolean active;
+    private Boolean active = true;
 
     public void addLancamento(Lancamento lancamento){
         LancamentoValidator.validar(lancamento);

@@ -28,14 +28,8 @@ public class ContaService {
         return getter.findById(id);
     }
 
-    public void addLancamento(Conta conta, Lancamento lancamento){
-        conta.addLancamento(lancamento);
-        if(lancamento.getTipoLancamento().equals(TipoLancamento.ENTRADA)){
-            conta.sumValueOn(lancamento.getValor());
-            return;
-        }
-
-        conta.getCreditCard().addLancamento(lancamento);
+    public Conta byBancoAndConta(String banco, String conta){
+        return getter.findByBancoAndConta(banco, conta);
     }
 
     public Page<ContaOutput> getAll(Pageable pageable) {

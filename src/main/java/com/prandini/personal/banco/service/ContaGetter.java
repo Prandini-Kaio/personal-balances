@@ -22,4 +22,7 @@ public class ContaGetter {
     public Conta findById(Long id){
         return repository.findById(id).orElseThrow();
     }
+    public Conta findByBancoAndConta(String banco, String conta){
+        return repository.findContaByBanco(banco, conta);
+    }
 }

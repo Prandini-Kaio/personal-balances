@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -17,5 +18,5 @@ public class ContaOutput {
     private String name;
     private BigDecimal valueOn;
     private Boolean active;
-    private List<LancamentoOutput> lancamentoList;
+    //private List<LancamentoOutput> lancamentoList = new ArrayList<>();
 }

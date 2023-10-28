@@ -39,8 +39,8 @@ public class LancamentoController {
     }
 
     @GetMapping("/{conta}")
-    public ResponseEntity<List<LancamentoOutput>> getByFilter(@PathVariable("conta") String conta){
-        return ResponseEntity.ok(this.service.getByConta(conta));
+    public ResponseEntity<List<LancamentoOutput>> getByFilter(@PathVariable("conta") String conta, @PathVariable("banco") String banco){
+        return ResponseEntity.ok(this.service.getByConta(conta, banco));
     }
 
     @GetMapping("/cost")

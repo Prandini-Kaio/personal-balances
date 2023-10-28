@@ -20,21 +20,11 @@ public class CreditCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Conta conta;
-    private BigDecimal limite;
-    private BigDecimal limiteUtilizado;
+    private BigDecimal limite = BigDecimal.ZERO;
+    private BigDecimal limiteUtilizado = BigDecimal.ZERO;
     private int diaVencimento;
     @OneToMany
     private List<Lancamento> lancamentosSaida;
-
-    public void addLancamento(Lancamento lancamento) {
-        for(var l : lancamentosSaida){
-            limiteUtilizado = limiteUtilizado.add(l.getValor());
-        }
-
-        if(limiteUtilizado.compareTo(limite) > 0){
-            throw new CreditCardException(CredCardExceptionMessage.limiteExcedido());
-        }
-    }
 }

@@ -3,6 +3,7 @@ package com.prandini.personal.lancamento.service;
 import com.prandini.personal.lancamento.domain.Lancamento;
 import com.prandini.personal.lancamento.domain.converter.LancamentoConverter;
 import com.prandini.personal.lancamento.domain.filter.LancamentoFilter;
+import com.prandini.personal.lancamento.enums.TipoLancamento;
 import com.prandini.personal.lancamento.exceptions.LancamentoException;
 import com.prandini.personal.lancamento.model.LancamentoInput;
 import com.prandini.personal.lancamento.model.LancamentoOutput;
@@ -38,14 +39,9 @@ public class LancamentoService {
         return LancamentoConverter.toOutput(contas);
     }
 
-    public LancamentoOutput registerLancamento(LancamentoInput lancamentoInput){
-        try {
-            validator.execute(lancamentoInput);
-        } catch (LancamentoException e) {
-            throw new RuntimeException(e);
-        }
-
-        return register.register(lancamentoInput);
+    public LancamentoOutput registerLancamento(LancamentoInput input){
+        validator.execute(input);
+        return register.register(input);
     }
 
     public LancamentoOutput update(LancamentoInput input){
@@ -56,8 +52,8 @@ public class LancamentoService {
         return LancamentoConverter.toOutput(updater.desactive(id));
     }
 
-    public List<LancamentoOutput> getByConta(String conta){
-        return LancamentoConverter.toOutput(this.getter.byConta(conta));
+    public List<LancamentoOutput> getByConta(String conta, String banco){
+        return LancamentoConverter.toOutput(this.getter.byConta(conta, banco));
     }
 
     public Stream<LancamentoOutput> findStreamByFilter(LancamentoFilter filter){

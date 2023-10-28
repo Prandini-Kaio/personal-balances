@@ -1,6 +1,7 @@
 package com.prandini.personal.banco.service;
 
 import com.prandini.personal.banco.domain.Conta;
+import com.prandini.personal.banco.domain.CreditCard;
 import com.prandini.personal.banco.domain.converter.ContaConverter;
 import com.prandini.personal.banco.model.ContaInput;
 import com.prandini.personal.banco.model.ContaOutput;
@@ -28,9 +29,17 @@ public class ContaRegister {
         Conta conta = new Conta();
         conta.setName(input.getName());
         conta.setBanco(bancoGetter.byName(input.getBanco()));
-        conta.setCreditCard(creditCardRegister.register(conta, input.getLimite(), input.getDiaVencimento()));
+
+        CreditCard creditCard = new CreditCard();
+        creditCard.setLimite(input.getLimite());
+        creditCard.setDiaVencimento(input.getDiaVencimento());
+        creditCard.setConta(conta);
+
+        conta.setCreditCard(creditCard);
         conta.setValueOn(BigDecimal.ZERO);
+
         repository.save(conta);
+        creditCard.setConta(conta);
         return ContaConverter.toOutput(conta);
     }
 }

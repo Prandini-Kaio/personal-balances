@@ -11,8 +11,10 @@ import java.math.BigDecimal;
 @Getter
 public class LancamentoInput {
     private Long id;
-    @NotNull
-    private Long contaId;
+    @NotBlank
+    private String banco;
+    @NotBlank
+    private String conta;
     @NotNull
     private BigDecimal valor;
     @NotBlank
@@ -21,4 +23,5 @@ public class LancamentoInput {
     private CategoriaLancamento categoriaLancamento;
     @NotNull
     private TipoLancamento tipoLancamento;
+    private int parcelas;
 }

@@ -1,16 +1,26 @@
 package com.prandini.personal.lancamento.service;
 
 import com.prandini.personal.banco.domain.Conta;
+import com.prandini.personal.banco.service.ContaGetter;
 import com.prandini.personal.banco.service.ContaService;
 import com.prandini.personal.lancamento.domain.Lancamento;
+import com.prandini.personal.lancamento.domain.Parcela;
 import com.prandini.personal.lancamento.domain.converter.LancamentoConverter;
+import com.prandini.personal.lancamento.enums.TipoLancamento;
 import com.prandini.personal.lancamento.model.LancamentoInput;
 import com.prandini.personal.lancamento.model.LancamentoOutput;
 import com.prandini.personal.lancamento.repository.LancamentoRepository;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Component
 public class LancamentoRegister {
@@ -18,23 +28,32 @@ public class LancamentoRegister {
     @Resource
     private LancamentoRepository repository;
     @Resource
-    private ContaService contaService;
+    private ContaGetter contaGetter;
 
     public LancamentoOutput register(LancamentoInput input){
-        Conta conta = contaService.byId(input.getContaId());
+        Conta conta = contaGetter.findByBancoAndConta(input.getBanco(), input.getConta());
 
-        Lancamento lancamento = new Lancamento(
-                null,
-                input.getValor(),
-                LocalDateTime.now(),
-                input.getDescricao(),
-                conta,
-                input.getCategoriaLancamento(),
-                input.getTipoLancamento(),
-                true
-        );
+        Lancamento lancamento = new Lancamento();
 
-        contaService.addLancamento(conta, lancamento);
+        lancamento.setConta(conta);
+        lancamento.setDescricao(input.getDescricao());
+        lancamento.setCategoriaLancamento(input.getCategoriaLancamento());
+        lancamento.setTipoLancamento(input.getTipoLancamento());
+        lancamento.setData(LocalDateTime.now());
+
+        List<Parcela> parcelas = new ArrayList<>();
+        for(int i = 1; i <= input.getParcelas(); i++){
+            Parcela parcela = new Parcela();
+            parcela.setValor(input.getValor().divide(BigDecimal.valueOf(input.getParcelas())));
+            //parcela.setLancamento(lancamento);
+            parcela.setNumero(i);
+            parcela.setDataVencimento(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth().plus(i), conta.getCreditCard().getDiaVencimento()));
+
+            parcelas.add(parcela);
+        }
+
+        lancamento.setParcelas(parcelas);
+
         repository.save(lancamento);
 
         return LancamentoConverter.toOutput(lancamento);

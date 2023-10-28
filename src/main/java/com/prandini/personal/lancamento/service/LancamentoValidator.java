@@ -2,6 +2,7 @@ package com.prandini.personal.lancamento.service;
 
 import com.prandini.personal.banco.service.ContaService;
 import com.prandini.personal.lancamento.exceptions.LancamentoException;
+import com.prandini.personal.lancamento.exceptions.LancamentoExceptionMessages;
 import com.prandini.personal.lancamento.model.LancamentoInput;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,7 @@ public class LancamentoValidator {
 
     public void validaValor(LancamentoInput input){
         if(input.getValor().compareTo(BigDecimal.ZERO) <= 0){
-            throw new LancamentoException("Valor do lancamento negativo ou zerado");
+            throw new LancamentoException(LancamentoExceptionMessages.valorNegativo());
         }
     }
 }
