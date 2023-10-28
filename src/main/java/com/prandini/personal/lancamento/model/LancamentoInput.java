@@ -23,5 +23,5 @@ public class LancamentoInput {
     private CategoriaLancamento categoriaLancamento;
     @NotNull
     private TipoLancamento tipoLancamento;
-    private int parcelas;
+    private int parcelas = 1;
 }

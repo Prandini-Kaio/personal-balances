@@ -27,4 +27,13 @@ public class CreditCard {
     private int diaVencimento;
     @OneToMany
     private List<Lancamento> lancamentosSaida;
+
+    public void addLancamento(Lancamento lancamento){
+        limiteUtilizado = limiteUtilizado.add(lancamento.getValorTotal());
+
+        if(limite.compareTo(limiteUtilizado) < 0)
+            throw new CreditCardException("Limite utilizado ultrapassa limite disponivel");
+
+        lancamentosSaida.add(lancamento);
+    }
 }

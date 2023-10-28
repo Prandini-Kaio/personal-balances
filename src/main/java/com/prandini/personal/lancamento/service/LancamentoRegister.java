@@ -2,11 +2,9 @@ package com.prandini.personal.lancamento.service;
 
 import com.prandini.personal.banco.domain.Conta;
 import com.prandini.personal.banco.service.ContaGetter;
-import com.prandini.personal.banco.service.ContaService;
 import com.prandini.personal.lancamento.domain.Lancamento;
 import com.prandini.personal.lancamento.domain.Parcela;
 import com.prandini.personal.lancamento.domain.converter.LancamentoConverter;
-import com.prandini.personal.lancamento.enums.TipoLancamento;
 import com.prandini.personal.lancamento.model.LancamentoInput;
 import com.prandini.personal.lancamento.model.LancamentoOutput;
 import com.prandini.personal.lancamento.repository.LancamentoRepository;
@@ -14,13 +12,10 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Component
 public class LancamentoRegister {
@@ -35,7 +30,7 @@ public class LancamentoRegister {
 
         Lancamento lancamento = new Lancamento();
 
-        lancamento.setConta(conta);
+        lancamento.setValorTotal(input.getValor());
         lancamento.setDescricao(input.getDescricao());
         lancamento.setCategoriaLancamento(input.getCategoriaLancamento());
         lancamento.setTipoLancamento(input.getTipoLancamento());
@@ -53,6 +48,10 @@ public class LancamentoRegister {
         }
 
         lancamento.setParcelas(parcelas);
+
+        conta.addLancamento(lancamento);
+
+        lancamento.setConta(conta);
 
         repository.save(lancamento);
 

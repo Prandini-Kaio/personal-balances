@@ -3,8 +3,6 @@ package com.prandini.personal.lancamento.service;
 import com.prandini.personal.lancamento.domain.Lancamento;
 import com.prandini.personal.lancamento.domain.converter.LancamentoConverter;
 import com.prandini.personal.lancamento.domain.filter.LancamentoFilter;
-import com.prandini.personal.lancamento.enums.TipoLancamento;
-import com.prandini.personal.lancamento.exceptions.LancamentoException;
 import com.prandini.personal.lancamento.model.LancamentoInput;
 import com.prandini.personal.lancamento.model.LancamentoOutput;
 import com.prandini.personal.lancamento.model.dto.CostOfMonthDTO;
@@ -39,7 +37,7 @@ public class LancamentoService {
         return LancamentoConverter.toOutput(contas);
     }
 
-    public LancamentoOutput registerLancamento(LancamentoInput input){
+    public LancamentoOutput register(LancamentoInput input){
         validator.execute(input);
         return register.register(input);
     }

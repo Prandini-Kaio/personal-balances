@@ -50,7 +50,7 @@ public class LancamentoController {
 
     @PostMapping
     public ResponseEntity register(@RequestBody @Valid LancamentoInput conta){
-        return ResponseEntity.ok(this.service.registerLancamento(conta));
+        return ResponseEntity.ok(this.service.register(conta));
     }
 
     @PutMapping

@@ -25,7 +25,7 @@ public class Lancamento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //private BigDecimal valor;
+    private BigDecimal valorTotal;
     private LocalDateTime data;
     private String descricao;
 

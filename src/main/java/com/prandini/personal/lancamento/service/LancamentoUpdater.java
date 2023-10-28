@@ -1,5 +1,6 @@
 package com.prandini.personal.lancamento.service;
 
+import com.prandini.personal.banco.service.ContaGetter;
 import com.prandini.personal.lancamento.domain.Lancamento;
 import com.prandini.personal.lancamento.repository.LancamentoRepository;
 import com.prandini.personal.lancamento.domain.converter.LancamentoConverter;
@@ -16,12 +17,17 @@ public class LancamentoUpdater {
     @Resource
     private LancamentoRepository repository;
 
+    @Resource
+    private ContaGetter contaGetter;
+
     public Lancamento update(LancamentoInput input){
         Lancamento lancamento = repository.getReferenceById(input.getId());
 
+        lancamento.setConta(contaGetter.findByBancoAndConta(input.getBanco(), input.getConta()));
+        lancamento.setData(LocalDateTime.now());
         lancamento.setDescricao(input.getDescricao());
-        lancamento.setCategoriaLancamento(input.getCategoriaLancamento());
         lancamento.setTipoLancamento(input.getTipoLancamento());
+        lancamento.setCategoriaLancamento(input.getCategoriaLancamento());
 
         return lancamento;
     }

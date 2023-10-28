@@ -2,6 +2,7 @@ package com.prandini.personal.banco.domain;
 
 import com.prandini.personal.banco.service.LancamentoValidator;
 import com.prandini.personal.lancamento.domain.Lancamento;
+import com.prandini.personal.lancamento.enums.TipoLancamento;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,11 +31,11 @@ public class Conta {
     private Boolean active = true;
 
     public void addLancamento(Lancamento lancamento){
-        LancamentoValidator.validar(lancamento);
-        this.lancamentos.add(lancamento);
-    }
+        if(lancamento.getTipoLancamento() == TipoLancamento.ENTRADA)
+            valueOn = valueOn.add(lancamento.getValorTotal());
+        else
+            creditCard.addLancamento(lancamento);
 
-    public void sumValueOn(BigDecimal value){
-        this.valueOn = this.valueOn.add(value);
+        lancamentos.add(lancamento);
     }
 }
