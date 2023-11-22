@@ -26,6 +26,7 @@ public class Lancamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private BigDecimal valorTotal;
+    private BigDecimal valorTotalPago;
     private LocalDateTime data;
     private String descricao;
 
@@ -41,5 +42,5 @@ public class Lancamento {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Parcela> parcelas;
 
-    private boolean ativa;
+    private boolean ativa = true;
 }

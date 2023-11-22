@@ -3,6 +3,7 @@ package com.prandini.personal.lancamento.model;
 
 import com.prandini.personal.lancamento.enums.CategoriaLancamento;
 import com.prandini.personal.lancamento.enums.TipoLancamento;
+import com.prandini.personal.lancamento.model.dto.ParcelaOuput;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

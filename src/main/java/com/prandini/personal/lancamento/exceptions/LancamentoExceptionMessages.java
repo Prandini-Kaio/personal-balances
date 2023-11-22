@@ -11,4 +11,8 @@ public class LancamentoExceptionMessages {
     }
     public static String categoriaEntradaInvalida(){return "Categoria do Lançamento, não se encaixa nas categorias de entrada."; }
     public static String categoriaSaidaInvalida(){return "Categoria do Lançamento, não se encaixa nas categorias de saída."; }
+
+    public static String parcelaValorAcima(){
+        return "Valor pago é maior que o valor total das parcelas.";
+    }
 }

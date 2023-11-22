@@ -18,5 +18,4 @@ public class ContaOutput {
     private String name;
     private BigDecimal valueOn;
     private Boolean active;
-    //private List<LancamentoOutput> lancamentoList = new ArrayList<>();
 }

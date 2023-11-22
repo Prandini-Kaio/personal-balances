@@ -18,6 +18,8 @@ public class Parcela {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private BigDecimal valor;
+    private BigDecimal payedValue = BigDecimal.ZERO;
+    private BigDecimal remainingValue = valor;
     private int numero;
     private LocalDate dataVencimento;
     private Boolean payed = false;

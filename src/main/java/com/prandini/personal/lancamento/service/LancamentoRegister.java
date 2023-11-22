@@ -2,6 +2,7 @@ package com.prandini.personal.lancamento.service;
 
 import com.prandini.personal.banco.domain.Conta;
 import com.prandini.personal.banco.service.ContaGetter;
+import com.prandini.personal.common.LocalDateConverter;
 import com.prandini.personal.lancamento.domain.Lancamento;
 import com.prandini.personal.lancamento.domain.Parcela;
 import com.prandini.personal.lancamento.domain.converter.LancamentoConverter;
@@ -39,10 +40,9 @@ public class LancamentoRegister {
         List<Parcela> parcelas = new ArrayList<>();
         for(int i = 1; i <= input.getParcelas(); i++){
             Parcela parcela = new Parcela();
-            parcela.setValor(input.getValor().divide(BigDecimal.valueOf(input.getParcelas())));
-            //parcela.setLancamento(lancamento);
+            parcela.setValor(input.getValor().divide(BigDecimal.valueOf(input.getParcelas()) , BigDecimal.ROUND_HALF_UP));
             parcela.setNumero(i);
-            parcela.setDataVencimento(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth().plus(i), conta.getCreditCard().getDiaVencimento()));
+            parcela.setDataVencimento(LocalDateConverter.getVencimento(i, conta.getCreditCard().getDiaVencimento()));
 
             parcelas.add(parcela);
         }

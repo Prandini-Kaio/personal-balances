@@ -115,4 +115,22 @@ public class LancamentoRepositoryCustomImpl implements LancamentoRepositoryCusto
 
         return query.getResultList();
     }
+
+    @Override
+    public Lancamento byId(Long id) {
+        Map<String, Object> params = new HashMap<>();
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("SELECT l ")
+                .append("FROM lancamento AS l ")
+                .append("WHERE 1 = 1 ");
+
+        QueryUtils.safeAddParams(params, "id", id, sb, "AND l.id = :id ");
+
+        Query query = this.entityManager.createQuery(sb.toString());
+        params.forEach(query::setParameter);
+
+        return (Lancamento) query.getSingleResult();
+    }
 }

@@ -1,4 +1,4 @@
-package com.prandini.personal.lancamento.model;
+package com.prandini.personal.lancamento.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

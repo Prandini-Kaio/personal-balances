@@ -1,8 +1,12 @@
 package com.prandini.personal.banco.exceptions;
 
+import com.prandini.personal.banco.domain.Banco;
+
 public class BancoExceptionMessages {
 
-    public static String notFound(){
-        return "ERRO: BANCO NAO ENCONTRADO NA BASE DE DADOS";
+    private static final String notFoundMessage = "%s não encontrado na base de dados.";
+
+    public static String notFound(Banco banco){
+        return String.format(notFoundMessage, banco.getName());
     }
 }

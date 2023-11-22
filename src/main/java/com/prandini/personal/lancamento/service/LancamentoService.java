@@ -6,6 +6,7 @@ import com.prandini.personal.lancamento.domain.filter.LancamentoFilter;
 import com.prandini.personal.lancamento.model.LancamentoInput;
 import com.prandini.personal.lancamento.model.LancamentoOutput;
 import com.prandini.personal.lancamento.model.dto.CostOfMonthDTO;
+import com.prandini.personal.lancamento.model.dto.PayParcelasInput;
 import com.prandini.personal.lancamento.service.actions.LancamentoReportAction;
 import jakarta.annotation.Resource;
 import org.springframework.data.domain.Page;
@@ -33,12 +34,11 @@ public class LancamentoService {
     private LancamentoReportAction reporter;
 
     public Page<LancamentoOutput> getPageOfContas(Pageable pageable){
-        Page<Lancamento> contas = this.getter.pageAll(pageable);
-        return LancamentoConverter.toOutput(contas);
+        return LancamentoConverter.toOutput(this.getter.pageAll(pageable));
     }
 
     public LancamentoOutput register(LancamentoInput input){
-        validator.execute(input);
+        validator.executeLancamento(input);
         return register.register(input);
     }
 
@@ -46,12 +46,17 @@ public class LancamentoService {
         return LancamentoConverter.toOutput(updater.update(input));
     }
 
+    public LancamentoOutput payParcelas(PayParcelasInput input){
+        validator.executePayParcela(input);
+        return LancamentoConverter.toOutput(updater.payParcelas(input));
+    }
+
     public LancamentoOutput desactive(Long id){
         return LancamentoConverter.toOutput(updater.desactive(id));
     }
 
     public List<LancamentoOutput> getByConta(String conta, String banco){
-        return LancamentoConverter.toOutput(this.getter.byConta(conta, banco));
+        return LancamentoConverter.toOutput(this.getter.byContaAndBanco(conta, banco));
     }
 
     public Stream<LancamentoOutput> findStreamByFilter(LancamentoFilter filter){
