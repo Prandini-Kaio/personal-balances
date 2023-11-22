@@ -1,6 +1,7 @@
 package com.prandini.personal.lancamento.repository;
 
 import com.prandini.personal.lancamento.domain.Lancamento;
+import com.prandini.personal.lancamento.enums.CategoriaLancamento;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

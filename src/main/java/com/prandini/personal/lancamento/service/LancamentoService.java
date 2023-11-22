@@ -54,20 +54,23 @@ public class LancamentoService {
     public LancamentoOutput desactive(Long id){
         return LancamentoConverter.toOutput(updater.desactive(id));
     }
-
     public List<LancamentoOutput> getByConta(String conta, String banco){
         return LancamentoConverter.toOutput(this.getter.byContaAndBanco(conta, banco));
     }
 
-    public Stream<LancamentoOutput> findStreamByFilter(LancamentoFilter filter){
+    public Stream<LancamentoOutput> byFilter(LancamentoFilter filter){
         return LancamentoConverter.toOutput(getter.byFilter(filter));
     }
 
-    public File byFilter(LancamentoFilter filter){
+    public File fileByFilter(LancamentoFilter filter) {
         return reporter.csvByFilter(filter);
     }
 
     public List<CostOfMonthDTO> getCostOfMonth(Integer mes){
         return getter.costByMes(mes);
+    }
+
+    public List<LancamentoOutput> byCategoria(CategoriaLancamento categoriaLancamento){
+        return LancamentoConverter.toOutput(getter.byCategoria(categoriaLancamento));
     }
 }

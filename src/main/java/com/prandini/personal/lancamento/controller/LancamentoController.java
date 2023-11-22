@@ -2,6 +2,7 @@ package com.prandini.personal.lancamento.controller;
 
 import com.prandini.personal.common.MediaTypeUtil;
 import com.prandini.personal.lancamento.domain.filter.LancamentoFilter;
+import com.prandini.personal.lancamento.enums.CategoriaLancamento;
 import com.prandini.personal.lancamento.model.LancamentoInput;
 import com.prandini.personal.lancamento.model.LancamentoOutput;
 import com.prandini.personal.lancamento.model.dto.CostOfMonthDTO;
@@ -36,7 +37,7 @@ public class LancamentoController {
 
     @GetMapping("/filter")
     public ResponseEntity<Stream<LancamentoOutput>> getByFilter(@RequestBody @Valid LancamentoFilter filter){
-        return ResponseEntity.ok(this.service.findStreamByFilter(filter));
+        return ResponseEntity.ok(this.service.byFilter(filter));
     }
 
     @GetMapping("/{conta}")
@@ -72,12 +73,18 @@ public class LancamentoController {
 
     @GetMapping("/exportar-csv")
     public ResponseEntity<InputStreamResource> getCsv(@RequestBody @Valid LancamentoFilter filter){
-        File file = this.service.byFilter(filter);
+        File file = this.service.fileByFilter(filter);
+
         try {
             InputStreamResource body = new InputStreamResource(new FileInputStream(file));
             return ResponseEntity.ok().contentType(MediaTypeUtil.frowFile(file)).body(body);
         }catch (FileNotFoundException e){
             throw new RuntimeException(e);
         }
+    }
+
+    @GetMapping("/byCategoria")
+    public ResponseEntity<List<LancamentoOutput>> byCategoria(@RequestParam(required = false)CategoriaLancamento categoriaLancamento){
+        return ResponseEntity.ok().body(service.byCategoria(categoriaLancamento));
     }
 }

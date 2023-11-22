@@ -2,6 +2,7 @@ package com.prandini.personal.lancamento.service;
 
 import com.prandini.personal.lancamento.domain.Lancamento;
 import com.prandini.personal.lancamento.domain.filter.LancamentoFilter;
+import com.prandini.personal.lancamento.enums.CategoriaLancamento;
 import com.prandini.personal.lancamento.model.dto.CostOfMonthDTO;
 import com.prandini.personal.lancamento.repository.LancamentoRepository;
 import jakarta.annotation.Resource;
@@ -37,6 +38,10 @@ public class LancamentoGetter {
         return repository.byFilter(filter);
     }
 
+    public Stream<Lancamento> fileByFilter(LancamentoFilter filter){
+        return repository.byFilter(filter);
+    }
+
     public List<CostOfMonthDTO> costByMes(Integer mes){
         List<Object[]> result = repository.byMes(mes);
         List<CostOfMonthDTO> dtos = new ArrayList<>();
@@ -48,6 +53,10 @@ public class LancamentoGetter {
             dtos.add(new CostOfMonthDTO(month, total, avg));
         }
         return dtos;
+    }
+
+    public List<Lancamento> byCategoria(CategoriaLancamento categoria){
+        return repository.findByCategoria(categoria);
     }
 
 }
