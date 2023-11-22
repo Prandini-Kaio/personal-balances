@@ -1,5 +1,6 @@
 package com.prandini.personal.lancamento.domain.converter;
 
+import com.prandini.personal.banco.domain.converter.CreditCardConverter;
 import com.prandini.personal.common.LocalDateConverter;
 import com.prandini.personal.lancamento.domain.Lancamento;
 import com.prandini.personal.lancamento.model.LancamentoOutput;
@@ -15,12 +16,14 @@ public class LancamentoConverter {
     public static LancamentoOutput toOutput(Lancamento lancamento){
         return new LancamentoOutput(
                 lancamento.getId(),
+                lancamento.getConta().getBanco().getName(),
                 lancamento.getConta().getName(),
-                lancamento.getValor(),
                 LocalDateConverter.toBrazilianDateString(lancamento.getData()),
                 lancamento.getDescricao(),
                 lancamento.getCategoriaLancamento(),
-                lancamento.getTipoLancamento());
+                lancamento.getTipoLancamento(),
+                ParcelaConverter.toOutput(lancamento.getParcelas())
+        );
     }
 
     public static Page<LancamentoOutput> toOutput(Page<Lancamento> contas){

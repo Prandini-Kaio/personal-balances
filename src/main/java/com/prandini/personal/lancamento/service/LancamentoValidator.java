@@ -1,8 +1,13 @@
 package com.prandini.personal.lancamento.service;
 
-import com.prandini.personal.conta.service.ContaService;
+import com.prandini.personal.banco.service.ContaService;
+import com.prandini.personal.lancamento.domain.Lancamento;
+import com.prandini.personal.lancamento.enums.CategoriaLancamento;
+import com.prandini.personal.lancamento.enums.TipoLancamento;
 import com.prandini.personal.lancamento.exceptions.LancamentoException;
+import com.prandini.personal.lancamento.exceptions.LancamentoExceptionMessages;
 import com.prandini.personal.lancamento.model.LancamentoInput;
+import com.prandini.personal.lancamento.model.dto.PayParcelasInput;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
@@ -12,15 +17,53 @@ import java.math.BigDecimal;
 public class LancamentoValidator {
 
     @Resource
-    private ContaService contaService;
+    private LancamentoGetter getter;
 
-    public void execute(LancamentoInput lancamento) throws LancamentoException {
-        validaValor(lancamento);
+    public void executeLancamento(LancamentoInput lancamento) throws LancamentoException {
+        validaValor(lancamento.getValor());
+        validaEntrada(lancamento);
+        validaSaida(lancamento);
     }
 
-    public void validaValor(LancamentoInput input){
-        if(input.getValor().compareTo(BigDecimal.ZERO) <= 0){
-            throw new LancamentoException("Valor do lancamento negativo ou zerado");
+    public void executePayParcela(PayParcelasInput input){
+        validaValor(input.getValor());
+        validaValorParcela(input);
+    }
+
+    public void validaValor(BigDecimal valor){
+        if(valor.compareTo(BigDecimal.ZERO) <= 0){
+            throw new LancamentoException(LancamentoExceptionMessages.valorNegativo());
         }
+    }
+
+    public void validaEntrada(LancamentoInput lancamento){
+        if(lancamento.getTipoLancamento() != TipoLancamento.ENTRADA)
+            return;
+
+        if(lancamento.getCategoriaLancamento() != CategoriaLancamento.RENDA
+                && lancamento.getCategoriaLancamento() != CategoriaLancamento.RENDA_ADICIONAL
+                && lancamento.getCategoriaLancamento() != CategoriaLancamento.ECONOMIA)
+        {
+            throw new LancamentoException(LancamentoExceptionMessages.categoriaEntradaInvalida());
+        }
+    }
+
+    public void validaSaida(LancamentoInput lancamento){
+        if(lancamento.getTipoLancamento() != TipoLancamento.SAIDA)
+            return;
+
+        if(lancamento.getCategoriaLancamento() == CategoriaLancamento.RENDA
+                || lancamento.getCategoriaLancamento() == CategoriaLancamento.RENDA_ADICIONAL
+                || lancamento.getCategoriaLancamento() == CategoriaLancamento.ECONOMIA)
+        {
+            throw new LancamentoException(LancamentoExceptionMessages.categoriaSaidaInvalida());
+        }
+    }
+
+    public void validaValorParcela(PayParcelasInput input){
+        Lancamento lancamento = getter.byId(input.getLancamentoID());
+        BigDecimal valorRestante = lancamento.getValorTotal().subtract(lancamento.getValorTotalPago());
+        if(input.getValor().compareTo(valorRestante) < 0)
+            throw new LancamentoException(LancamentoExceptionMessages.parcelaValorAcima());
     }
 }

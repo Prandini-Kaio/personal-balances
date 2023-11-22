@@ -26,8 +26,12 @@ public class LancamentoGetter {
         return repository.findAllByAtivaIsTrue(pageable);
     }
 
-    public List<Lancamento> byConta(String conta){
-        return repository.byConta(conta);
+    public List<Lancamento> byContaAndBanco(String conta, String banco){
+        return repository.byBancoAndConta(conta, banco);
+    }
+
+    public Lancamento byId(Long id){
+        return repository.byId(id);
     }
 
     public Stream<Lancamento> byFilter(LancamentoFilter filter){

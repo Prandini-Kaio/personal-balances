@@ -39,7 +39,6 @@ public class LancamentoReportAction {
         getters.put("ID", l -> l.getId().toString());
         getters.put("Conta", l -> l.getConta().getName());
         getters.put("Data de registro", l -> LocalDateConverter.toBrazilianDateTimeString(l.getData()));
-        getters.put("Valor", l -> "R$" + l.getValor().toString());
         getters.put("Tipo", l -> l.getTipoLancamento().toString());
         getters.put("Categoria", l -> l.getCategoriaLancamento().toString());
         return getters;

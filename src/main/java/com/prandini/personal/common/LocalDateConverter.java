@@ -1,6 +1,7 @@
 package com.prandini.personal.common;
 
 import lombok.experimental.UtilityClass;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -109,4 +110,16 @@ public class LocalDateConverter {
         return LocalDate.parse(data, formatter);
     }
 
+    public LocalDate getVencimento(int parcela, int diaVecimento){
+        int mes, ano;
+
+        if(LocalDate.now().plusMonths(parcela).getMonthValue() == 1)
+            ano = LocalDate.now().plusYears(1).getYear();
+        else
+            ano = LocalDate.now().getYear();
+
+        mes = LocalDate.now().plusMonths(parcela).getMonthValue();
+
+        return LocalDate.of(ano, mes, diaVecimento);
+    }
 }

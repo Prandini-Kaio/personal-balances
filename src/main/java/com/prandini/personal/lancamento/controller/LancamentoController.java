@@ -6,6 +6,7 @@ import com.prandini.personal.lancamento.enums.CategoriaLancamento;
 import com.prandini.personal.lancamento.model.LancamentoInput;
 import com.prandini.personal.lancamento.model.LancamentoOutput;
 import com.prandini.personal.lancamento.model.dto.CostOfMonthDTO;
+import com.prandini.personal.lancamento.model.dto.PayParcelasInput;
 import com.prandini.personal.lancamento.service.LancamentoService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
@@ -40,8 +41,8 @@ public class LancamentoController {
     }
 
     @GetMapping("/{conta}")
-    public ResponseEntity<List<LancamentoOutput>> getByFilter(@PathVariable("conta") String conta){
-        return ResponseEntity.ok(this.service.byConta(conta));
+    public ResponseEntity<List<LancamentoOutput>> getByFilter(@PathVariable("conta") String conta, @PathVariable("banco") String banco){
+        return ResponseEntity.ok(this.service.getByConta(conta, banco));
     }
 
     @GetMapping("/cost")
@@ -51,7 +52,12 @@ public class LancamentoController {
 
     @PostMapping
     public ResponseEntity register(@RequestBody @Valid LancamentoInput conta){
-        return ResponseEntity.ok(this.service.registerLancamento(conta));
+        return ResponseEntity.ok(this.service.register(conta));
+    }
+
+    @PostMapping("/pay")
+    public ResponseEntity payParcela(@RequestBody @Valid PayParcelasInput input){
+        return ResponseEntity.ok().body(service.payParcelas(input));
     }
 
     @PutMapping
