@@ -13,6 +13,8 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -29,29 +31,34 @@ public class LancamentoRegister {
     public LancamentoOutput register(LancamentoInput input){
         Conta conta = contaGetter.findByBancoAndConta(input.getBanco(), input.getConta());
 
-        Lancamento lancamento = new Lancamento();
-
-        lancamento.setValorTotal(input.getValor());
-        lancamento.setDescricao(input.getDescricao());
-        lancamento.setCategoriaLancamento(input.getCategoriaLancamento());
-        lancamento.setTipoLancamento(input.getTipoLancamento());
-        lancamento.setData(LocalDateTime.now());
 
         List<Parcela> parcelas = new ArrayList<>();
         for(int i = 1; i <= input.getParcelas(); i++){
-            Parcela parcela = new Parcela();
-            parcela.setValor(input.getValor().divide(BigDecimal.valueOf(input.getParcelas()) , BigDecimal.ROUND_HALF_UP));
-            parcela.setNumero(i);
-            parcela.setDataVencimento(LocalDateConverter.getVencimento(i, conta.getCreditCard().getDiaVencimento()));
 
-            parcelas.add(parcela);
+            parcelas.add(Parcela
+                    .builder()
+                        .valor(input.getValor().divide(BigDecimal.valueOf(input.getParcelas())))
+                        .payedValue(BigDecimal.ZERO)
+                        .remainingValue(input.getValor().divide(BigDecimal.valueOf(input.getParcelas())))
+                        .numero(i)
+                        .dataVencimento(LocalDateConverter.getVencimento(i, conta.getCreditCard().getDiaVencimento()))
+                        .payed(false)
+                    .build());
         }
 
-        lancamento.setParcelas(parcelas);
+        Lancamento lancamento = Lancamento.builder()
+                        .valorTotal(input.getValor())
+                        .valorTotalPago(BigDecimal.ZERO)
+                        .data(LocalDateTime.now())
+                        .descricao(input.getDescricao())
+                        .categoriaLancamento(input.getCategoriaLancamento())
+                        .tipoLancamento(input.getTipoLancamento())
+                        .ativa(true)
+                        .parcelas(parcelas)
+                        .conta(conta)
+                .build();
 
         conta.addLancamento(lancamento);
-
-        lancamento.setConta(conta);
 
         repository.save(lancamento);
 

@@ -1,6 +1,5 @@
 package com.prandini.personal.lancamento.service;
 
-import com.prandini.personal.lancamento.domain.Lancamento;
 import com.prandini.personal.lancamento.domain.converter.LancamentoConverter;
 import com.prandini.personal.lancamento.domain.filter.LancamentoFilter;
 import com.prandini.personal.lancamento.model.LancamentoInput;
@@ -47,7 +46,7 @@ public class LancamentoService {
     }
 
     public LancamentoOutput payParcelas(PayParcelasInput input){
-        validator.executePayParcela(input);
+        validator.validaPagamento(input);
         return LancamentoConverter.toOutput(updater.payParcelas(input));
     }
 

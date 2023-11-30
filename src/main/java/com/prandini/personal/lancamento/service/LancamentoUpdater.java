@@ -45,7 +45,7 @@ public class LancamentoUpdater {
 
         for(var p : lancamento.getParcelas()){
 
-            if(Objects.equals(valorPagamento, BigDecimal.ZERO)) break;
+            if(valorPagamento.compareTo(BigDecimal.ZERO) == 0) break;
 
             if(!p.getPayed()){
                 if(p.getRemainingValue().compareTo(input.getValor()) >= 0){

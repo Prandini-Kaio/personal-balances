@@ -1,6 +1,5 @@
 package com.prandini.personal.lancamento.service;
 
-import com.prandini.personal.banco.service.ContaService;
 import com.prandini.personal.lancamento.domain.Lancamento;
 import com.prandini.personal.lancamento.enums.CategoriaLancamento;
 import com.prandini.personal.lancamento.enums.TipoLancamento;
@@ -25,7 +24,7 @@ public class LancamentoValidator {
         validaSaida(lancamento);
     }
 
-    public void executePayParcela(PayParcelasInput input){
+    public void validaPagamento(PayParcelasInput input){
         validaValor(input.getValor());
         validaValorParcela(input);
     }

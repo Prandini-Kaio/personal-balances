@@ -2,6 +2,7 @@ package com.prandini.personal.lancamento.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 @Entity(name = "parcela")
 @Table(name = "parcelas")
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Parcela {
@@ -18,8 +20,8 @@ public class Parcela {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private BigDecimal valor;
-    private BigDecimal payedValue = BigDecimal.ZERO;
-    private BigDecimal remainingValue = valor;
+    private BigDecimal payedValue;
+    private BigDecimal remainingValue;
     private int numero;
     private LocalDate dataVencimento;
     private Boolean payed = false;
